@@ -1,0 +1,27 @@
+<html ng-app="TabCard">
+	<head>
+		<meta charset="utf-8">
+		<title>TabCard</title>
+		<link rel="stylesheet" type="text/css" href="css/lib/bootstrap-flatly.css">
+		<!-- <link rel="stylesheet" href=""> -->
+		<style>
+			body{
+				font-family: "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  				width: 180px;
+			}
+		</style>
+	</head>
+	<body>
+		<div ng-controller="getTabController">
+			<ul class="nav nav-pills nav-stacked">
+			    <li><a ng-click="getCurrent()" href="">将本页保存下来</a></li>
+			    <li><a ng-click="getAllTab()" href="">把这个窗口保存下来</a></li>
+			    <li><a ng-click="openHistory()" href="">看看我都保存了什么</a></li>
+			</ul>
+         </div>
+
+		<script src="js/lib/angular.min.js"></script>
+		<script src="js/lib/angular-resource.min.js"></script>
+		<script src="js/main.js"></script>
+		<script src="js/storageService.js"></script>
+	</body></html>
