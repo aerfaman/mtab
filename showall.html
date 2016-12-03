@@ -1,0 +1,19 @@
+<div class="row" ng-controller='consoleController'>
+  <div class="col-md-12">
+    <a href="#" class="btn btn-info" style="float:right" ng-click="removeAll()">删除所有</a>
+  </div>
+  <div class="col-md-12">
+
+    <ul class="media-list">
+      <div class="tab-card" ng-repeat="tab in tabs track by $index">
+          <button type="button" class="close" data-dismiss="alert" ng-click="removeTab(tab)" style="padding-right:20px;float:left;">&times;</button>
+          <li class="media" style="margin-left:35px;">
+            <a class="pull-left" style="cursor: pointer;" ng-click="openSavedTab(tab)" ><img class="media-object img-rounded" src="{{tab['tabInfo'].icon}}" style="vertical-align:middle;width:20px;margin-right:10px;"></a>
+            <div class="media-body">
+              <h4 class="media-heading" ><a style="cursor: pointer;" ng-click="openSavedTab(tab)" >{{tab['tabInfo'].title}}</a></h4>
+            </div>
+          </li>
+        </div>
+      </ul>
+      </div>
+</div>

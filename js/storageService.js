@@ -1,4 +1,11 @@
-var app=angular.module('TabCard');
+var app=angular.module('TabCard').config( [
+    '$compileProvider',
+    function( $compileProvider )
+    {   
+        $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension):/);
+        // Angular before v1.2 uses $compileProvider.urlSanitizationWhitelist(...)
+    }
+]);
 app.service('storageService',function($q){
 	var _this=this;
 	this.data=[];

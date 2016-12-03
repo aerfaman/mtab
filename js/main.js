@@ -25,7 +25,14 @@
 // });
 
 
-var app=angular.module('TabCard',[]);
+var app=angular.module('TabCard',[]).config( [
+    '$compileProvider',
+    function( $compileProvider )
+    {   
+        $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension):/);
+        // Angular before v1.2 uses $compileProvider.urlSanitizationWhitelist(...)
+    }
+]);
 // app.directive("test",function(){
 
 // 		return{
@@ -40,14 +47,21 @@ app.controller('getTabController',function($scope, storageService){
 	});
 	$scope.getCurrent=function(){
 		chrome.tabs.getSelected(null,function(tab){
-			if (tab.url=="chrome://newtab/"||tab.url==""||tab.url.indexOf('chrome://')==0||tab.url.indexOf('chrome-extension://')==0){
-				console.log('url empty');
-				return ;
-			}
-			if(tab.title==""){
-				tab.url=tab.title;
-			}
+			// if (tab.url=="chrome://newtab/"||tab.url==""||tab.url.indexOf('chrome://')==0||tab.url.indexOf('chrome-extension://')==0){
+			// 	console.log('url empty');
+			// 	return ;
+			// }
+			// if(tab.title==""){
+			// 	tab.url=tab.title;
+			// }
         	console.log(tab);
+        	if (tab.url=="chrome://newtab/") {
+        		chrome.tabs.remove(tab.id);
+        		return;
+        	};
+        	if (tab.url.indexOf('chrome://')==0||tab.favIconUrl==""||tab.url.indexOf('chrome-extension://')==0) {
+					tab.favIconUrl="./images/chrome.png";
+			};
         	// chrome.pageCapture.saveAsMHTML({tabId:tab.id},function(mhtml){
         	// 	$scope.html=mhtml;
         	// });
@@ -58,9 +72,10 @@ app.controller('getTabController',function($scope, storageService){
         		url:tab.url,
         		html:$scope.html,
         	};
-					console.log($scope.tab);
+			// console.log($scope.tab);
         	$scope.$apply();
         	storageService.add($scope.tab);
+        	chrome.tabs.remove(tab.id);
         	// window.close();
         	// chrome.pageCapture.saveAsMHTML({tabId:tab.id},function(mhtml){
         	// 	console.log(mhtml);
@@ -88,12 +103,19 @@ app.controller('getTabController',function($scope, storageService){
 		chrome.windows.getCurrent({populate:true},function(window){
 
 			window.tabs.forEach(function(tab){
-				if (tab.url.indexOf('chrome://')==0||tab.url.indexOf('chrome-extension://')==0) {
+				// if (tab.url.indexOf('chrome://')==0||tab.url.indexOf('chrome-extension://')==0) {
+				// 	return;
+				// }
+				if (tab.url=="chrome://newtab/") {
+					chrome.tabs.remove(tab.id);
 					return;
+				}
+				if (tab.url.indexOf('chrome://')==0||tab.favIconUrl==""||tab.url.indexOf('chrome-extension://')==0) {
+					tab.favIconUrl="./images/chrome.png";
 				}
 				$scope.tab={
 					id:tab.id,
-        	icon:tab.favIconUrl,
+        			icon:tab.favIconUrl,
 					title:tab.title,
 					url:tab.url
 				}

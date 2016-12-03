@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 	<head>
 		<meta charset="utf-8">
-		<title>TabCard</title>
+		<title>Mtab</title>
 
 		<link rel="stylesheet" type="text/css" href="css/lib/bootstrap.min.css">
 		<!-- <link rel="stylesheet" type="text/css" href="css/lib/bootstrap-flatly.css"> -->
@@ -27,6 +27,9 @@
 			.tab-card:hover .close{
 				display: block;
 			}
+			a:hover{
+				text-decoration:none;
+			}
 		</style>
 	</head>
 	<!-- <body>
@@ -36,45 +39,24 @@
 
 	</body> -->
 	<body style="background:#F7F9F9;" ng-app="TabCard">
-		<div class="container" ng-controller="showTabController">
-			<div class="page-header">
-				<div class="btn-group">
-              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">按时间排序收藏标签页 <span class="caret"></span></button>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="#">按时间排序收藏标签页</a></li>
-                <li><a href="#" >按名称排序收藏标签页</a></li>
-                <!-- <li><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <li><a href="#">Separated link</a></li> -->
-              </ul>
-            </div>
-				<a href="#" class="btn btn-info">当前所有标签页</a>
-			  <a href="#" class="btn btn-info" ng-click="removeAll()">删除所有</a>
-			  <a href="#" class="btn btn-default" style="float:right">Default</a>
-			</div>
+		<div class="container" >
+		  <div class="page-header" ng-controller="consoleController">
+		    <div class="btn-group">
+		          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">按时间排序收藏标签页 <span class="caret"></span></button>
+		          <ul class="dropdown-menu" role="menu">
+		            <li><a href="#">按时间排序收藏标签页</a></li>
+		            <li><a href="#" >按名称排序收藏标签页</a></li>
+		          </ul>
+		        </div>
+		    <a href="#/activingtabs" class="btn btn-info">当前所有标签页</a>
+		    <a href="#" class="btn btn-info" ng-click="removeAll()">删除所有</a>
+		    <a href="#" class="btn btn-default" style="float:right">Default</a>
+		  </div>
 
-		<div class="row">
-			<div class="col-md-12">
-				<a href="#" class="btn btn-info" style="float:right" ng-click="removeAll()">删除所有</a>
-			</div>
-			<div class="col-md-12">
-				<ul class="media-list">
+<div ng-view>
+</div>
+</div>
 
-					<div class="tab-card" ng-repeat="tab in tabs track by $index">
-							<button type="button" class="close" data-dismiss="alert" ng-click="removeTab(tab)" style="padding-right:20px;float:left;">&times;</button>
-              <li class="media" style="margin-left:35px;">
-                <a class="pull-left" href="{{tab['tabInfo'].url}}" ><img class="media-object img-rounded" src="{{tab['tabInfo'].icon}}" style="vertical-align:middle;width:20px;margin-right:10px;"></a>
-                <div class="media-body">
-                  <h4 class="media-heading"><a href="{{tab['tabInfo'].url}}">{{tab['tabInfo'].title}}</a></h4>
-                  <!-- <p>12 Apr, 2013 at 12:00</p> -->
-                  <!-- <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.</p> -->
-                </div>
-              </li>
-						</div>
-          </ul>
-					</div>
-				</div>
-		</div>
 			<!-- <div ng-repeat="tab in tabs track by $index">
 			<div class="panel panel-default tab-card">
 			  <div class="panel-body" style="padding:10px;">
@@ -94,6 +76,7 @@
 		</div>
 		<script type="text/javascript" src="js/lib/jquery-3.0.0.min.js"></script>
 		<script type="text/javascript" src="js/lib/angular.min.js"></script>
+		<script type="text/javascript" src="js/lib/angular-route.js"></script>
 		<script type="text/javascript" src="js/lib/angular-resource.min.js"></script>
 		<script type="text/javascript" src="js/lib/bootstrap.min.js"></script>
 		<script type="text/javascript" src="js/showalltab.js"></script>
