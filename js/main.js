@@ -59,23 +59,28 @@ app.controller('getTabController',function($scope, storageService){
         		chrome.tabs.remove(tab.id);
         		return;
         	};
-        	if (tab.url.indexOf('chrome://')==0||tab.favIconUrl==""||tab.url.indexOf('chrome-extension://')==0) {
+        	if (tab.url.indexOf('chrome://')==0||tab.favIconUrl==""||tab.url.indexOf('chrome-extension://')==0||typeof tab.favIconUrl == 'undefined') {
 					tab.favIconUrl="./images/chrome.png";
 			};
+			if(tab.title==''){
+				tab.title=tab.url;
+			}
         	// chrome.pageCapture.saveAsMHTML({tabId:tab.id},function(mhtml){
         	// 	$scope.html=mhtml;
         	// });
+        	date=new Date();
         	$scope.tab={
         		id:tab.id,
+        		createat:Date.parse(date),
         		icon:tab.favIconUrl,
         		title:tab.title,
         		url:tab.url,
-        		html:$scope.html,
+        		// html:$scope.html,
         	};
 			// console.log($scope.tab);
         	$scope.$apply();
         	storageService.add($scope.tab);
-        	chrome.tabs.remove(tab.id);
+        	// chrome.tabs.remove(tab.id);
         	// window.close();
         	// chrome.pageCapture.saveAsMHTML({tabId:tab.id},function(mhtml){
         	// 	console.log(mhtml);
@@ -106,25 +111,28 @@ app.controller('getTabController',function($scope, storageService){
 				// if (tab.url.indexOf('chrome://')==0||tab.url.indexOf('chrome-extension://')==0) {
 				// 	return;
 				// }
+				console.log(tab);
 				if (tab.url=="chrome://newtab/") {
 					chrome.tabs.remove(tab.id);
 					return;
 				}
-				if (tab.url.indexOf('chrome://')==0||tab.favIconUrl==""||tab.url.indexOf('chrome-extension://')==0) {
+				if (tab.url.indexOf('chrome://')==0||tab.favIconUrl==""||tab.url.indexOf('chrome-extension://')==0||!tab.favIconUrl) {
 					tab.favIconUrl="./images/chrome.png";
 				}
+				date=new Date();
 				$scope.tab={
 					id:tab.id,
+					createat:Date.parse(date),
         			icon:tab.favIconUrl,
 					title:tab.title,
 					url:tab.url
 				}
 				$scope.$apply();
 				storageService.add($scope.tab);
-				chrome.tabs.remove(tab.id);
+				// chrome.tabs.remove(tab.id);
 
 			});
-            $scope.openHistory();
+            // $scope.openHistory();
 		});
 	}
 	$scope.openHistory = function(){

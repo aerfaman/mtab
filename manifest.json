@@ -5,7 +5,8 @@
 	// "background":{"scripts":["js/main.js"]},
 	"permissions":[
 		"tabs","storage",
-		"pageCapture"
+		"pageCapture",
+		"webRequest"
 	],
 
 	"description":"Save every tab you want.",
